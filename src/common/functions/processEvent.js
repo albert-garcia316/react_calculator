@@ -74,6 +74,7 @@ export default (newInput, eq, currentOutput) => {
             break;
 
         case "±":
+            currentInput = plusMinusInsertFunction(currentInput);
             break;
 
         case "()":
