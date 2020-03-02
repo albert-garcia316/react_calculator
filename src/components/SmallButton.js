@@ -28,7 +28,7 @@ export default class SmallButton extends Component {
             this.setState({name: "×"});
         } else if(this.props.name === "&#177"){
             this.setState({name: "±"});
-        } else if(this.props.name === "&#8730"){
+        } else if(this.props.name === "&#8730;"){
             this.setState({name: "√"});
         } else if(this.props.name === "&#178"){
             this.setState({name: "x²"});
@@ -41,9 +41,6 @@ export default class SmallButton extends Component {
         let c = "smallButton " + this.props.color + " ";
         if(this.props.bgColor){
             c += "bg" + this.props.bgColor + " ";
-        };
-        if(this.props.name === "&#9003;"){
-            c += "smallIcon ";
         };
         this.setState({classes: c});
     };

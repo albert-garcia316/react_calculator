@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import './styles/App.css';
 import CalculatorWrapper from "./components/CalculatorWrapper";
 import HistoryContainer from "./components/HistoryContainer";
 
