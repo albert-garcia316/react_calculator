@@ -4,7 +4,9 @@ import {insertDotFunction} from "./dotInsertFunctions";
 import zeroInsertFunction, {isValueGreaterThanZeroFunction} from "./zeroInsertFunctions";
 import operatorInsertFunction from "./operatorInsertFunctions";
 import percentInsertFunction from "./percentInsertFunctions";
-
+import plusMinusInsertFunction from "./plusMinusFunctions";
+import squarerootInsertFunction from "./squarerootInsertFunctions";
+import parenthesesInsertFunction, { openCloseCount } from "./parenthesesFunctions";
 
 
 // check for non zero number
@@ -78,22 +80,52 @@ export default (newInput, eq, currentOutput) => {
             break;
 
         case "()":
+            const insertParenthesis = parenthesesInsertFunction(currentInput, arrIndex, lastIndex);
+            currentInput = insertParenthesis ? currentInput + insertParenthesis : currentInput;
             break;
 
         case "&#9003;":
+            if(currentInput.length > 1 && currentInput[currentInput.length - 2] === "√"){
+                currentInput = currentInput.substr(0,currentInput.length - 2);
+            };
+            if(arrIndex.length === 1){
+                currentOutput = "";
+            };
+            currentInput = currentInput.length > 0 ? currentInput.substr(0, currentInput.length -1) : currentInput; 
             break;
 
         case "C":
+            currentInput = currentInput.length > 0 ? "" : currentInput;
+            currentOutput = "";
             break;
 
         case "CE":
+            if(stateArr.length < 2){
+                currentInput = "";
+            } else if(arrIndex.length > 0){
+                let updatedInput = "";
+                for(var i = 0; i < stateArr.length - 1; i++){
+                    updatedInput += stateArr[i] + operatorsUsed[i];
+                };
+                currentInput = updatedInput;
+            };
+            currentOutput = "";
             break;
 
         case "=":
+            const equalInsertable = ["%", "√", "²"];
+            const count = openCloseCount(currentInput);
+            if(count.open === count.close && ((stateArr.length > 1 && isValueGreaterThanZeroFunction(arrIndex)) || equalInsertable.some(i => currentInput.includes(i)))){
+                equalFlag = true;
+            };
             break;
 
         default:
             break;
     };
 
+    return {
+        input: currentInput,
+        output: currentOutput
+    };
 };

@@ -16,3 +16,17 @@ export const openCloseCount = str => {
     };
     return count;
 };
+
+export default (currentInput, arrIndex, lastIndex) => {
+    const count = openCloseCount(currentInput);
+    if(!lastIndex){
+        return "(";
+    };
+    if(lastIndex && !isValueGreaterThanZeroFunction(arrIndex) && !arrIndex.includes("0")){
+        return "(";
+    };
+    if(isValueGreaterThanZeroFunction(arrIndex) && count.open > count.close){
+        return ")";
+    };
+    return false;
+}
