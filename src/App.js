@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import './styles/App.css';
 import CalculatorWrapper from "./components/CalculatorWrapper";
 import HistoryContainer from "./components/HistoryContainer";
+import keySelector from "./common/functions/keySelector";
+import processEvent from "./common/functions/processEvent";
 
 
 export default class App extends Component {
@@ -24,15 +26,38 @@ export default class App extends Component {
   };
 
   buttonPress = e => {
-    
+    const value = processEvent(e.target.value, this.state.input, this.state.output);
+    this.setState({
+      input: value.input,
+      output: value.output
+    });
+    if(value.input.includes("=")){
+      let newhist = [...this.state.history];
+      newhist.push(value.input + value.output);
+      this.setState({history: [...newhist]});
+    };
   };
 
   handleKeyPress = e => {
-
+    let typed = keySelector(e.key);
+    if(typed){
+      this.setState({key: typed});
+      this.removeHighlight();
+      const value = processEvent(typed, this.state.input, this.state.output);
+      this.mockButtonPress(value);
+    }
   };
 
-  mockButtonPress = typed => {
-    this.setState({input: typed});
+  mockButtonPress = value => {
+    this.setState({
+      input: value.input,
+      output: value.output
+    });
+    if(value.input.includes("=")){
+      let newhist = [...this.state.history];
+      newhist.push(value.input + value.output);
+      this.setState({history: [...newhist]});
+    };
   };
 
   removeHighlight = () => {
