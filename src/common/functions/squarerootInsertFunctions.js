@@ -1,13 +1,22 @@
 import {isValueGreaterThanZeroFunction} from "./zeroInsertFunctions";
 import {operators} from "../acceptedKeys";
 import {operatorsUsedFunction} from "./stateStringFunctions";
-// import {} from "."
+import {evaluateParenthesis} from "./parenthesesFunctions";
 
 
 export const squarerootCalculation = input => {
     for(var i = 0 ; i < input.length; i++){
         if(input[i] === "√"){
             let block = rootBlockFinder(input.slice(i+1));
+            let val = evaluateParenthesis(block);
+            if(operators.includes(val[val.length-1])){
+                val = val.slice(0, val.length -1);
+            };
+            val = Math.sqrt(val);
+            val = val.toString();
+
+            input = input.replace("√(" + block + ")", val);
+            input = input.replace("√(" + block, val);
         };
     };
     return input;
