@@ -1,6 +1,22 @@
 import {isValueGreaterThanZeroFunction} from "./zeroInsertFunctions";
-// import {} from "./";
+import {squareEvaluation, doArithmetic, evaluateIndex} from "./arithmeticFunctions";
 
+export const evaluateParenthesis = input => {
+    if(input.length < 1){
+        return input;
+    };
+
+    if(!input.includes("(")){
+        if(input.includes("²")){
+            input = squareEvaluation(input);
+        };
+        return doArithmetic(input);
+    };
+
+    let pArr = input.match(/[^()]+/g);
+    input = evaluateIndex(pArr, input);
+    return evaluateParenthesis(input);
+}
 
 export const openCloseCount = str => {
     let count = {
