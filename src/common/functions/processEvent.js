@@ -7,6 +7,7 @@ import percentInsertFunction from "./percentInsertFunctions";
 import plusMinusInsertFunction from "./plusMinusFunctions";
 import squarerootInsertFunction from "./squarerootInsertFunctions";
 import parenthesesInsertFunction, { openCloseCount } from "./parenthesesFunctions";
+import {runningOutput} from "./calculateFunctions";
 
 
 // check for non zero number
@@ -124,8 +125,13 @@ export default (newInput, eq, currentOutput) => {
             break;
     };
 
+    const newOutput = (eq !== currentInput || equalFlag) ? runningOutput(currentInput, currentOutput) : currentOutput;
+    if(equalFlag){
+        currentInput += "=";
+    };
+    
     return {
         input: currentInput,
-        output: currentOutput
+        output: newOutput
     };
 };
