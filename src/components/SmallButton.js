@@ -13,7 +13,7 @@ export default class SmallButton extends Component {
     };
 
     componentDidMount(){
-        this.symbolConver();
+        this.symbolConverter();
         this.setClasses();
         if(this.props.typedKey === this.props.name){
             this.setState({toggleHighlight: true});
@@ -21,7 +21,7 @@ export default class SmallButton extends Component {
         };
     };
 
-    symbolConver = () => {
+    symbolConverter = () => {
         if(this.props.name === "&divide;"){
             this.setState({name: "÷"});
         } else if(this.props.name === "&times;"){
